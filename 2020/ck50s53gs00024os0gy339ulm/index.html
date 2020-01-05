@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    pandas：排序、合并、去重、时间 |  Bijingrui&#39;s blog
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+</html>
+
+<body>
+<script src="/live2d-widget/autoload.js"></script>
+
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-pandas：排序、合并、去重、时间" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  pandas：排序、合并、去重、时间
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/ck50s53gs00024os0gy339ulm/" class="article-date">
+  <time datetime="2020-01-05T08:52:50.099Z" itemprop="datePublished">2020-01-05</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"># 排序函数</span><br><span class="line"># print(df.sort_values(by&#x3D;[&#39;candle_begin_time_GMT8&#39;], ascending&#x3D;0))  # by参数指定按照什么进行排序，acsending参数指定是顺序还是逆序，1顺序，0逆序</span><br><span class="line"># print(df.sort_values(by&#x3D;[&#39;symbol&#39;, &#39;candle_begin_time_GMT8&#39;], ascending&#x3D;[0, 0]))  # 按照多列进行排序  symbolA----Z  如果A对应多组时间数据 数据按从小到大排列</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 两个df上下合并操作，append操作</span><br><span class="line"># df1 &#x3D; df.iloc[0:10][[&#39;candle_begin_time_GMT8&#39;, &#39;open&#39;, &#39;close&#39;, &#39;volume&#39;]] #行取0-15 列取4列</span><br><span class="line"># print(df1)</span><br><span class="line"># df2 &#x3D; df.iloc[5:15][[&#39;candle_begin_time_GMT8&#39;, &#39;open&#39;, &#39;close&#39;, &#39;volume&#39;]] #行取5-15 列取4列</span><br><span class="line"># print(df2)</span><br><span class="line"># print(df1.append(df2))  # append操作，将df1和df2上下拼接起来。注意观察拼接之后的index。哇，index可以重复（不唯一）</span><br><span class="line"># df3 &#x3D; df1.append(df2, ignore_index&#x3D;True)  # ignore_index参数，用户重新确定index 系统自动给了0-19</span><br><span class="line"># print(df3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 对数据进行去重</span><br><span class="line"># df3中有重复的行数，我们如何将重复的行数去除？</span><br><span class="line"># df3.drop_duplicates(</span><br><span class="line">#     subset&#x3D;[&#39;candle_begin_time&#39;, &#39;symbol&#39;],  # subset参数用来指定根据哪类类数据来判断是否重复。若不指定，则用全部列的数据来判断是否重复</span><br><span class="line">#     keep&#x3D;&#39;first&#39;,  # 在去除重复值的时候，我们是保留上面一行还是下面一行？first保留上面一行，last保留下面一行，False就是一行都不保留</span><br><span class="line">#     inplace&#x3D;True</span><br><span class="line"># )</span><br><span class="line"># print(df3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 其他常用重要函数</span><br><span class="line"># df.reset_index(inplace&#x3D;True, drop&#x3D;False)  # 重置index，原始的index变成一列，新index 0-1-2-3 ……</span><br><span class="line"># print(df.rename(columns&#x3D;&#123;&#39;close&#39;: &#39;收盘价&#39;, &#39;open&#39;: &#39;开盘价&#39;&#125;))  # rename函数给变量修改名字。使用dict将要修改的名字传给columns参数</span><br><span class="line"># print(df.empty)  # 判断一个df是不是为空，此处输出不为空</span><br><span class="line"># print(pd.DataFrame().empty)  # pd.DataFrame()创建一个空的DataFrame，此处输出为空</span><br><span class="line"># print(df.T)  # 将数据转置，行变成列，很有用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># df中，字符串处理</span><br><span class="line"># print(df[&#39;symbol&#39;])</span><br><span class="line"># print(&#39;BTCUSD&#39;[:3]) # 输出BTC</span><br><span class="line"># print(df[&#39;symbol&#39;].str[:3])  # .str函数表示我要进行str操作</span><br><span class="line"># print(df[&#39;symbol&#39;].str.upper())  # 加上str之后可以使用常见的字符串函数对整列进行操作</span><br><span class="line"># print(df[&#39;symbol&#39;].str.lower())</span><br><span class="line"># print(df[&#39;symbol&#39;].str.len())  # 计算字符串的长度,length</span><br><span class="line"># df[&#39;symbol&#39;].str.strip()  # strip操作，把字符串两边的空格去掉</span><br><span class="line"># print(df[&#39;symbol&#39;])</span><br><span class="line"># print(df[&#39;symbol&#39;].str.contains(&#39;AID&#39;))  # 判断字符串中是否包含某些特定字符</span><br><span class="line"># print(df[&#39;symbol&#39;].str.replace(&#39;AID&#39;, &#39;AVT&#39;))  # 进行替换，将sz替换成sh</span><br><span class="line"># # 更多字符串函数：http:&#x2F;&#x2F;pandas.pydata.org&#x2F;pandas-docs&#x2F;stable&#x2F;text.html#method-summary</span><br><span class="line"></span><br><span class="line"># 时间处理</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;])</span><br><span class="line"># print(df.at[0, &#39;candle_begin_time&#39;])</span><br><span class="line"># print(type(df.at[0, &#39;candle_begin_time&#39;])) # 看是string还是date型</span><br><span class="line"></span><br><span class="line"># df[&#39;candle_begin_time&#39;] &#x3D; pd.to_datetime(df[&#39;candle_begin_time&#39;])  # 将日期由string改为date</span><br><span class="line"># print(df.at[0, &#39;candle_begin_time&#39;])</span><br><span class="line"># print(type(df.at[0, &#39;candle_begin_time&#39;]))</span><br><span class="line"></span><br><span class="line"># print(pd.to_datetime(&#39;1999年1月11日&#39;))  # pd.to_datetime函数：将字符串转变为时间变量</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;])</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.year)  # 输出这个日期的年份。相应的month是月份，day是天数，还有hour, minute, second</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.week)  # 这一天是一年当中的第几周</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.dayofyear)  # 这一天是一年当中的第几天</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.dayofweek)  # 这一天是这一周当中的第几天，0代表星期一</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.weekday)  # 和上面函数相同，更加常用</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.weekday_name)  # 和上面函数相同，返回的是星期几的英文，用于报表的制作。</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.days_in_month)  # 这一天所在月份有多少天</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;].dt.is_month_start)  # 这一天是否是该月的开头，是否存在is_month_end？</span><br><span class="line"># print(df[&#39;candle_begin_time&#39;] + pd.Timedelta(hours&#x3D;1))  # 增加一天，Timedelta用于表示时间差数据，[weeks, days, hours, minutes, seconds, milliseconds, microseconds, nanoseconds]</span><br><span class="line"># print((df[&#39;candle_begin_time&#39;] + pd.Timedelta(days&#x3D;1)) - df[&#39;candle_begin_time&#39;])  # 增加一天然后再减去今天的日期</span><br></pre></td></tr></table></figure>
+
+      
+      <!-- 打赏 -->
+      
+        <div id="reward-btn">
+          打赏
+        </div>
+        
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bijingrui1997.github.io/2020/ck50s53gs00024os0gy339ulm/" data-id="ck50s53gs00024os0gy339ulm"
+        class="article-share-link">分享</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" rel="tag">量化交易</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/ck50s53gp00014os0h29w3bin/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            pandas：对缺失值处理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/ck50s53h600064os0ans2cxg7/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">pandas：输出显示的设置，输出df整体的信息</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2019-2020
+        bijingrui1997
+      </li>
+      <li>
+        
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a> by shenyu
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <ul class="list-inline">
+  <li>PV:<span id="busuanzi_value_page_pv"></span></li>
+  <li>UV:<span id="busuanzi_value_site_uv"></span></li>
+</ul>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278526813&amp;web_id=1278526813'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    
+    <aside class="sidebar">
+      
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Bijingrui&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">目录</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/">量化交易</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+  
+  
+  </div>
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+
+</html>

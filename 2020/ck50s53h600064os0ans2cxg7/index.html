@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    pandas：输出显示的设置，输出df整体的信息 |  Bijingrui&#39;s blog
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/pace.min.js"></script>
+
+
+  
+
+  
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+</html>
+
+<body>
+<script src="/live2d-widget/autoload.js"></script>
+
+  <div id="app">
+    <main class="content">
+      <section class="outer">
+  <article id="post-pandas：输出显示的设置，输出df整体的信息" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  pandas：输出显示的设置，输出df整体的信息
+</h1>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/ck50s53h600064os0ans2cxg7/" class="article-date">
+  <time datetime="2020-01-05T08:21:47.353Z" itemprop="datePublished">2020-01-05</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+
+
+
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">#读入数据</span><br><span class="line">path &#x3D; r&#39;C:\Users\Administrator\Desktop\1day数据.csv&#39;  # 加入r 使保留原始</span><br><span class="line">df &#x3D; pd.read_csv(filepath_or_buffer&#x3D;path, index_col&#x3D;[&#39;candle_begin_time_GMT8&#39;])</span><br><span class="line"></span><br><span class="line"># 对print出的数据格式进行修正</span><br><span class="line"># pd.set_option(&#39;expand_frame_repr&#39;, False)  # 当列太多时不换行</span><br><span class="line"># pd.set_option(&#39;max_colwidth&#39;, 1)  # 设定每一列的最大宽度，恢复原设置的方法，pd.reset_option(&#39;max_colwidth&#39;)</span><br><span class="line"># pd.set_option(&quot;display.max_rows&quot;, 100)  # 设定显示最大的行数</span><br><span class="line"># pd.set_option(&#39;precision&#39;, 6)  # 浮点数的精度</span><br><span class="line"># print(df.head())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 看数据:datafram的整体情况</span><br><span class="line"># print(df.shape)  # 输出dataframe有多少行、多少列。  输出的是元组（）：（200,5）</span><br><span class="line"># print(df.shape[0])  # 取行数量，相应的列数量就是df.shape[1]  ; 元组的第一个元素：200   &#x3D;&#x3D; 说明有200行</span><br><span class="line"># print(df.columns)  # 顺序输出每一列的名字，演示如何for语句遍历。 #Index([&#39;open&#39;, &#39;high&#39;, &#39;low&#39;, &#39;close&#39;, &#39;volume&#39;], dtype&#x3D;&#39;object&#39;)</span><br><span class="line">for colum in df.columns:</span><br><span class="line">    print(colum)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># print(df.index)  # 顺序输出每一行的名字，可以for语句遍历。</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">Index([&#39;2019-06-14&#39;, &#39;2019-06-15&#39;, &#39;2019-06-16&#39;, &#39;2019-06-17&#39;, &#39;2019-06-18&#39;,</span><br><span class="line">       &#39;2019-06-19&#39;, &#39;2019-06-20&#39;, &#39;2019-06-21&#39;, &#39;2019-06-22&#39;, &#39;2019-06-23&#39;,</span><br><span class="line">       ...</span><br><span class="line">       &#39;2019-12-21&#39;, &#39;2019-12-22&#39;, &#39;2019-12-23&#39;, &#39;2019-12-24&#39;, &#39;2019-12-25&#39;,</span><br><span class="line">       &#39;2019-12-26&#39;, &#39;2019-12-27&#39;, &#39;2019-12-28&#39;, &#39;2019-12-29&#39;, &#39;2019-12-30&#39;],</span><br><span class="line">      dtype&#x3D;&#39;object&#39;, name&#x3D;&#39;candle_begin_time_GMT8&#39;, length&#x3D;200)</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line"># print(df.dtypes)  # 该方法输出每一列变量类型。 数据每一列的类型不一样，比如数字、字符串、日期等</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">open      float64</span><br><span class="line">high      float64</span><br><span class="line">low       float64</span><br><span class="line">close     float64</span><br><span class="line">volume    float64</span><br><span class="line">dtype: object</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line"></span><br><span class="line"># print(df.head(3))  # 看前3行的数据，默认是5。与自然语言很接近</span><br><span class="line"># print(df.tail(3))  # 看最后3行的数据，默认是5。</span><br><span class="line"># print(df.sample(n&#x3D;3))  # 随机抽取3行，想要去固定比例的话，可以用frac参数 frc&#x3D;0.5 找出50%的行</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># print(df.describe())  # 非常方便的函数，对每一列数据有直观感受；只会对数字类型的列有效</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">               open          high           low         close         volume</span><br><span class="line">count    200.000000    200.000000    200.000000    200.000000     200.000000</span><br><span class="line">mean    9282.277500   9535.187500   9015.039000   9278.158500   39334.125210</span><br><span class="line">std     1473.668477   1569.883295   1384.061178   1477.698135   31189.826968</span><br><span class="line">min     6696.800000   6863.500000   6434.400000   6696.400000    7236.585667</span><br><span class="line">25%     8069.025000   8229.325000   7867.275000   8056.100000   17183.930891</span><br><span class="line">50%     9354.850000   9558.850000   9119.500000   9354.800000   28504.698180</span><br><span class="line">75%    10391.325000  10632.000000  10079.000000  10391.300000   45619.843611</span><br><span class="line">max    12889.900000  13971.400000  12100.000000  12887.400000  150042.414757</span><br><span class="line">&#39;&#39;&#39;</span><br></pre></td></tr></table></figure>
+
+      
+      <!-- 打赏 -->
+      
+        <div id="reward-btn">
+          打赏
+        </div>
+        
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bijingrui1997.github.io/2020/ck50s53h600064os0ans2cxg7/" data-id="ck50s53h600064os0ans2cxg7"
+        class="article-share-link">分享</a>
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" rel="tag">量化交易</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/ck50s53gs00024os0gy339ulm/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            pandas：排序、合并、去重、时间
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/about/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">About Me</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2019-2020
+        bijingrui1997
+      </li>
+      <li>
+        
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a> by shenyu
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <ul class="list-inline">
+  <li>PV:<span id="busuanzi_value_page_pv"></span></li>
+  <li>UV:<span id="busuanzi_value_site_uv"></span></li>
+</ul>
+        
+      </li>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278526813&amp;web_id=1278526813'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+    <div class="to_top">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+      </div>
+    </main>
+    
+    <aside class="sidebar">
+      
+        <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Bijingrui&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">目录</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/">量化交易</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/about">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+      </aside>
+      <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+      
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+  
+<script src="/js/tocbot.min.js"></script>
+
+  <script>
+    // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+<script>
+  var ayerConfig = {
+    mathjax: false
+  }
+</script>
+
+
+<script src="/js/ayer.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+  
+  
+  </div>
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+
+</html>

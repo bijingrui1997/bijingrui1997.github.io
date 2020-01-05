@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    About Me |  Bijingrui&#39;s blog
+    pandas：对缺失值处理 |  Bijingrui&#39;s blog
   </title>
   
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -32,7 +32,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-about" class="article article-type-post" itemscope
+  <article id="post-pandas：对缺失值处理" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -40,7 +40,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  About Me
+  pandas：对缺失值处理
 </h1>
   
 
@@ -49,8 +49,8 @@
 
     
     <div class="article-meta">
-      <a href="/2019/about/" class="article-date">
-  <time datetime="2019-12-29T04:10:40.084Z" itemprop="datePublished">2019-12-29</time>
+      <a href="/2020/ck50s53gp00014os0h29w3bin/" class="article-date">
+  <time datetime="2020-01-05T08:52:50.110Z" itemprop="datePublished">2020-01-05</time>
 </a>
       
     </div>
@@ -58,8 +58,6 @@
 
     
     
-    <div class="tocbot"></div>
-
 
 
 
@@ -73,8 +71,8 @@
       
 
       
-      <h4 id="How-are-you-doing？Thank-you-for-visiting-my-blog"><a href="#How-are-you-doing？Thank-you-for-visiting-my-blog" class="headerlink" title="How are you doing？Thank you for visiting my blog."></a>How are you doing？Thank you for visiting my blog.</h4><h4 id="I-am-Bijingrui，majoring-in-computer-science"><a href="#I-am-Bijingrui，majoring-in-computer-science" class="headerlink" title="I am Bijingrui，majoring in computer science."></a>I am Bijingrui，majoring in computer science.</h4><h4 id="I-want-to-record-something-here"><a href="#I-want-to-record-something-here" class="headerlink" title="I want to record something here!"></a>I want to record something here!</h4><hr>
-<h4 id="wechat-：-bijingrui1997"><a href="#wechat-：-bijingrui1997" class="headerlink" title="wechat ： bijingrui1997"></a>wechat ： bijingrui1997</h4><h4 id="QQ：-80661059"><a href="#QQ：-80661059" class="headerlink" title="QQ： 80661059"></a>QQ： 80661059</h4><h4 id="github：https-github-com-bijingrui1997"><a href="#github：https-github-com-bijingrui1997" class="headerlink" title="github：https://github.com/bijingrui1997"></a>github：<a href="https://github.com/bijingrui1997" target="_blank" rel="noopener">https://github.com/bijingrui1997</a></h4>
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"># 读入数据</span><br><span class="line"># path &#x3D; r&#39;C:\Users\Administrator\Desktop\1day数据.csv&#39;  # 加入r 使保留原始</span><br><span class="line">path &#x3D; r&#39;C:\Users\Administrator\Desktop\1min数据.csv&#39;  # 加入r 使保留原始</span><br><span class="line">df &#x3D; pd.read_csv(filepath_or_buffer&#x3D;path, index_col&#x3D;[&#39;candle_begin_time_GMT8&#39;])</span><br><span class="line">pd.set_option(&#39;expand_frame_repr&#39;, False)  # 当列太多时不换行</span><br><span class="line"></span><br><span class="line"># 缺失值处理：原始数据中存在缺失值，如何处理？</span><br><span class="line"></span><br><span class="line"># 创建缺失值</span><br><span class="line">index &#x3D; df[df[&#39;close&#39;]&gt; 7372].index #  如果把candle_begin_time_GMT8作为index  似乎不能把它作为列来筛选？</span><br><span class="line">df.loc[index, &#39;star&#39;] &#x3D; df[&#39;close&#39;] # 创建一列叫star 如果close&gt;7372 那么star的值为close，否则Nan</span><br><span class="line"># print(df)</span><br><span class="line"></span><br><span class="line"># 删除缺失值</span><br><span class="line"># print(df.dropna(how&#x3D;&#39;any&#39;))  # 将带有空值的行删除。how&#x3D;&#39;any&#39;意味着，该行中只要有一个空值，就会删除，尽管该行中别的数据有值</span><br><span class="line"># print(df.dropna(subset&#x3D;[&#39;star&#39;, &#39;close&#39;], how&#x3D;&#39;all&#39;))  # subset参数指定在特定的列中判断空值。</span><br><span class="line"># all代表全部为空，才会删除该行；any只要一个为空，就删除该行。</span><br><span class="line"></span><br><span class="line"># 补全缺失值</span><br><span class="line"># print(df.fillna(value&#x3D;0))  # 直接将缺失值赋值为固定的值</span><br><span class="line"># df[&#39;star&#39;].fillna(value&#x3D;df[&#39;close&#39;], inplace&#x3D;True)  # 直接将缺失值赋值其他列的数据</span><br><span class="line"># print(df)</span><br><span class="line"># print(df.fillna(method&#x3D;&#39;ffill&#39;))  # 向上寻找最近的一个非空值，以该值来填充缺失的位置，全称forward fill，非常有用</span><br><span class="line"># print(df.fillna(method&#x3D;&#39;bfill&#39;))  # 向下寻找最近的一个非空值，以该值来填充确实的位置，全称backward fill</span><br><span class="line"></span><br><span class="line"># 找出缺失值 #还是输出n*n表格，只不过数据换成True &#x2F; False</span><br><span class="line"># print(df.notnull())  # 判断是否为空值，反向函数为isnull()</span><br><span class="line"># print(df[df[&#39;star&#39;].notnull()])  # 将&#39;star&#39;列为空的行输出</span><br></pre></td></tr></table></figure>
+
       
       <!-- 打赏 -->
       
@@ -84,9 +82,11 @@
         
     </div>
     <footer class="article-footer">
-      <a data-url="https://bijingrui1997.github.io/2019/about/" data-id="ck50s53g700004os01unmef8e"
+      <a data-url="https://bijingrui1997.github.io/2020/ck50s53gp00014os0h29w3bin/" data-id="ck50s53gp00014os0h29w3bin"
         class="article-share-link">分享</a>
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pandas/" rel="tag">pandas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" rel="tag">量化交易</a></li></ul>
+
     </footer>
 
   </div>
@@ -95,15 +95,20 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/ck50s53h600064os0ans2cxg7/" class="article-nav-link">
+      <a href="/2020/ck50s53h100044os0a12b7qag/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            pandas：输出显示的设置，输出df整体的信息
+            pandas：行列操作、定位数据
           
         </div>
       </a>
     
+    
+      <a href="/2020/ck50s53gs00024os0gy339ulm/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">pandas：排序、合并、去重、时间</div>
+      </a>
     
   </nav>
 
